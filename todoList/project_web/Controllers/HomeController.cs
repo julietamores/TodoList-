@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using project_web.Models;
+using project_web.Models.Login;
 
 namespace project_web.Controllers
 {
@@ -20,10 +18,45 @@ namespace project_web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            LoginViewModel loginViewModel =
+                new LoginViewModel
+            {
+                isLogged = true,
+                message = ""
+            };
+
+            return View(loginViewModel);
         }
 
-        
+        public IActionResult Login(LoginModel loginModel)
+        {
+            LoginViewModel loginViewModel =
+                new LoginViewModel();
+
+            if(string.IsNullOrEmpty(loginModel.userName) ||
+                string.IsNullOrEmpty(loginModel.password))
+            {
+                loginViewModel.isLogged = false;
+                loginViewModel.message = "Debe ingresar un nombre de usuario o password";
+
+                return View("~/Views/Home/Index.cshtml", loginViewModel);
+            }
+            
+            if(!loginModel.userName.Equals("Admin") ||
+                !loginModel.password.Equals("Admin"))
+            {
+                loginViewModel.isLogged = false;
+                loginViewModel.message = "Nombre de usuario o contraseña incorrecto";
+
+                return View("~/Views/Home/Index.cshtml", loginViewModel);
+            }
+
+            HttpContext.Session.Set<LoginModel>(
+                                "UsuarioLogueado",
+                                loginModel);
+
+            return Redirect("~/Panel/Index");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
