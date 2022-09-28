@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using dao_library;
-using dao_library.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using project_web.Models;
-using project_web.Models.Common;
-using project_web.Models.Login;
-using project_web.Models.Usuario;
-using service_library;
 
 namespace project_web.Controllers
 {

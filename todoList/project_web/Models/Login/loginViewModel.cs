@@ -1,6 +1,6 @@
 using System;
 
-namespace mvc_project.Models.Login
+namespace project_web.Models.Login
 {
     public class LoginViewModel
     {

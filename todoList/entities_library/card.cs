@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace entity_library.Sistema
+namespace entities_library
 {
     public class Card
     {
